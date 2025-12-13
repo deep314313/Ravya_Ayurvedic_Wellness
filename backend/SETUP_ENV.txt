@@ -1,0 +1,22 @@
+# RAVYA Backend Environment Variables
+# Copy the content below to your backend/.env file
+
+MONGODB_URI=mongodb://localhost:27017/ravya
+PORT=5000
+NODE_ENV=development
+
+# Email Configuration (Gmail)
+EMAIL_USER=ravya.health@gmail.com
+EMAIL_PASSWORD=efntusitdyuhmchx
+
+# Razorpay Test Mode Keys (Free Testing - No Real Money)
+# These are standard Razorpay test keys for development
+RAZORPAY_KEY_ID=rzp_test_1DP5mmOlF5G5ag
+RAZORPAY_KEY_SECRET=thisissecretforrazorpay123
+
+# Note: In test mode, you can use test card numbers:
+# Card Number: 4111 1111 1111 1111
+# CVV: Any 3 digits
+# Expiry: Any future date
+# No real money is charged in test mode!
+

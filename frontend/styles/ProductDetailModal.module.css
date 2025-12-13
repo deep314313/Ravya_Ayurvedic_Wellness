@@ -1,0 +1,475 @@
+/* MODAL OVERLAY - Blur Background */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 999998;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* MODAL CONTAINER */
+.modalContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 30px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+  z-index: 999999;
+  overflow: hidden;
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* CLOSE BUTTON */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background: #ff4444;
+  color: white;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* MODAL CONTENT - Split Layout */
+.modalContent {
+  display: flex;
+  height: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+/* LEFT SECTION - Product Showcase */
+.leftSection {
+  flex: 0 0 45%;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e1e8ed 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.productShowcase {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glowing Background Circle */
+.glowingBg {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  opacity: 0.25;
+  filter: blur(80px);
+  transition: opacity 0.3s ease;
+}
+
+/* Product Bottle Image */
+.bottleImage {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.3));
+  z-index: 2;
+}
+
+/* Floating particles removed for better performance */
+
+/* Product Badge */
+.productBadge {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.75rem;
+  color: white;
+  font-weight: 600;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-size: 0.95rem;
+  z-index: 3;
+}
+
+/* RIGHT SECTION - Product Details */
+.rightSection {
+  flex: 1;
+  padding: 3rem;
+  overflow-y: auto;
+  background: white;
+}
+
+.rightSection::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rightSection::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.rightSection::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.rightSection::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Product Title */
+.productTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.productTagline {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+/* Detail Sections */
+.detailSection {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionIcon {
+  color: #27ae60;
+  font-size: 1.2rem;
+}
+
+/* Benefits List */
+.benefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.benefitItem:hover {
+  background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
+  transform: translateX(5px);
+}
+
+.benefitIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.benefitText {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Ingredients List */
+.ingredientsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ingredientChip {
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  color: white;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ingredientChip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(39, 174, 96, 0.4);
+}
+
+/* Nutrition Grid */
+.nutritionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.nutritionItem {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: linear-gradient(135deg, #fff5e1 0%, #ffe4b5 100%);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.nutritionLabel {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.nutritionValue {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Price Section */
+.priceSection {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.priceInfo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.priceLabel {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.priceAmount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.priceUnit {
+  font-size: 1rem;
+  color: #999;
+}
+
+/* Add to Cart Button */
+.addToCartButton {
+  width: 100%;
+  padding: 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.addToCartButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.addToCartButton:active {
+  transform: translateY(-1px);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 968px) {
+  .modalContent {
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .leftSection {
+    flex: none;
+    padding: 2rem;
+    min-height: 300px;
+  }
+
+  .productShowcase {
+    height: 300px;
+  }
+
+  .bottleImage {
+    max-width: 200px;
+    max-height: 280px;
+  }
+
+  .glowingBg {
+    width: 250px;
+    height: 250px;
+  }
+
+  .rightSection {
+    flex: none;
+    padding: 2rem;
+    overflow-y: visible;
+  }
+
+  .productTitle {
+    font-size: 2rem;
+  }
+
+  .productBadge {
+    bottom: 20px;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .modalContainer {
+    width: 95%;
+    max-height: 95vh;
+    border-radius: 20px;
+  }
+
+  .closeButton {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    top: 15px;
+    right: 15px;
+  }
+
+  .leftSection {
+    padding: 1.5rem;
+    min-height: 250px;
+  }
+
+  .productShowcase {
+    height: 250px;
+  }
+
+  .bottleImage {
+    max-width: 160px;
+    max-height: 230px;
+  }
+
+  .glowingBg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .rightSection {
+    padding: 1.5rem;
+  }
+
+  .productTitle {
+    font-size: 1.6rem;
+  }
+
+  .productTagline {
+    font-size: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+
+  .nutritionGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .priceAmount {
+    font-size: 2rem;
+  }
+
+  .addToCartButton {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .particle {
+    font-size: 1.5rem;
+  }
+}
+

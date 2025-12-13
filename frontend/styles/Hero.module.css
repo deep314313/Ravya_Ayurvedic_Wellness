@@ -1,0 +1,273 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 110px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.heroContainer {
+  width: 100%;
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.heroLeft {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.heroLeft.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+.heroTitle {
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+/* Price Banner - USP */
+.priceBanner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #F4B942 0%, #F9D67A 100%);
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 25px rgba(244, 185, 66, 0.4);
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.priceBanner:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(244, 185, 66, 0.5);
+}
+
+.priceTag {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.priceAmount {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.priceSubtext {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+.heroSubtitle {
+  font-size: 1.125rem;
+  color: var(--color-gray);
+  margin-bottom: 2.5rem;
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.heroStats {
+  display: flex;
+  gap: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-light-gray);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNumber {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: var(--color-gray);
+  margin-top: 0.25rem;
+}
+
+.heroRight {
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.2s;
+}
+
+.heroRight.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bannerContainer {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bannerImage {
+  width: 110%;
+  height: 110%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));
+  transition: transform 0.3s ease;
+  transform: translateY(-30px);
+}
+
+.bannerImage:hover {
+  transform: translateY(-30px) scale(1.02);
+}
+
+@media (max-width: 968px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .heroLeft {
+    text-align: center;
+  }
+
+  .heroSubtitle {
+    max-width: 100%;
+  }
+
+  .heroCtas {
+    justify-content: center;
+  }
+
+  .heroStats {
+    justify-content: center;
+  }
+
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.65rem 1.25rem;
+    max-width: 95%;
+  }
+
+  .priceBanner {
+    padding: 0.85rem 1.75rem;
+    gap: 0.6rem;
+  }
+
+  .priceAmount {
+    font-size: 2.25rem;
+  }
+
+  .bannerContainer {
+    height: 500px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 2rem;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.6rem 1rem;
+    gap: 0.35rem;
+    max-width: 100%;
+    line-height: 1.4;
+    margin-top: 1rem;
+  }
+
+  .priceBanner {
+    padding: 0.75rem 1.5rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .priceTag {
+    font-size: 0.85rem;
+  }
+
+  .priceAmount {
+    font-size: 2rem;
+  }
+
+  .priceSubtext {
+    font-size: 0.8rem;
+  }
+
+  .heroStats {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .bannerContainer {
+    height: 400px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero {
+    padding-top: 110px;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.75rem;
+    gap: 0.3rem;
+    margin-top: 1.25rem;
+  }
+}
+

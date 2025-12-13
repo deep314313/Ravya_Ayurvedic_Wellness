@@ -1,0 +1,172 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--color-cream);
+}
+
+.successCard {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--color-white);
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--color-white);
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+}
+
+.message {
+  color: var(--color-gray);
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.ideaStageMessage {
+  background: linear-gradient(135deg, #fff5e1 0%, #ffe8cc 100%);
+  border-left: 4px solid #F4B942;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.ideaStageTitle {
+  font-size: 1.5rem;
+  color: #F4B942;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.ideaStageMessage .message {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.orderDetails {
+  background-color: var(--color-cream);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  background-color: #4CAF50;
+  color: var(--color-white);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.orderItems {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.orderItems h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background-color: var(--color-cream);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+}
+
+.shippingInfo {
+  text-align: left;
+  background-color: var(--color-cream);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+}
+
+.shippingInfo h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.shippingInfo p {
+  margin: 0.25rem 0;
+  color: var(--color-gray);
+}
+
+.actions {
+  margin-bottom: 2rem;
+}
+
+.note {
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-light-gray);
+}
+
+.note p {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 640px) {
+  .successCard {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
