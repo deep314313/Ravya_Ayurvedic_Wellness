@@ -31,6 +31,7 @@ const Navbar = () => {
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.navContainer}`}>
         <div className={styles.logo}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src="/Ravya_Logo_Transparent.png" 
             alt="RAVYA Logo" 

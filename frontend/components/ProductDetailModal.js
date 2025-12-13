@@ -66,6 +66,7 @@ export default function ProductDetailModal({ product, isOpen, onClose, onAddToCa
               ></div>
               
               {/* Product Image */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={getProductImage(product.name)}
                 alt={product.name}

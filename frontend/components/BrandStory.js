@@ -45,6 +45,7 @@ const BrandStory = () => {
         {/* Large Featured Card */}
         <div className={styles.featuredCard}>
           <div className={styles.cardImage}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src={storyCards[activeCard].image} 
               alt={storyCards[activeCard].title}
@@ -83,6 +84,7 @@ const BrandStory = () => {
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               <div className={styles.cardImageSmall}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={card.image} alt={card.title} />
                 <div className={styles.cardOverlay}>
                   <span className={styles.readMore}>Read More →</span>

@@ -53,7 +53,7 @@ const Contact = () => {
             Get in <span className="text-gradient">Touch</span>
           </h2>
           <p className={styles.subtitle}>
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
 

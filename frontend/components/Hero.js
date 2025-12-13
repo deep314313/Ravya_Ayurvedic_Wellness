@@ -68,6 +68,7 @@ const Hero = ({ products }) => {
 
           <div className={`${styles.heroRight} ${mounted ? styles.fadeIn : ''}`}>
             <div className={styles.bannerContainer}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/Banner_3.png" 
                 alt="RAVYA Ayurvedic Wellness Drinks" 

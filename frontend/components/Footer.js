@@ -39,6 +39,7 @@ const Footer = () => {
         <div className={styles.footerTop}>
           <div className={styles.footerColumn}>
             <div className={styles.logo}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/Ravya_Logo_Transparent.png" 
                 alt="RAVYA Logo" 
