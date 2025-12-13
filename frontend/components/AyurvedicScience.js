@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '../styles/AyurvedicScience.module.css';
 
 const AyurvedicScience = () => {
@@ -25,6 +26,7 @@ const AyurvedicScience = () => {
         <div className={styles.content}>
           <div className={styles.left}>
             <div className={styles.herbsIllustration}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/ayurvedic_image_section.png" 
                 alt="Ayurvedic Herbs and Ingredients" 
@@ -42,7 +44,7 @@ const AyurvedicScience = () => {
             <p className={styles.description}>
               Modern science is finally catching up to what Ayurveda has known for 
               5,000 years: plants and herbs contain powerful compounds that support 
-              our body's natural healing abilities. We've made it delicious and 
+              our body&apos;s natural healing abilities. We&apos;ve made it delicious and 
               effortless to tap into this wisdom every single day.
             </p>
 

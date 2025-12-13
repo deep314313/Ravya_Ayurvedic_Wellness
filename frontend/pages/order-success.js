@@ -12,22 +12,6 @@ export default function OrderSuccess() {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (orderId) {
-      loadOrder();
-    }
-  }, [orderId]);
-
-  // Refresh cart when component mounts to ensure it's cleared
-  useEffect(() => {
-    if (refreshCart) {
-      // Small delay to ensure backend has cleared the cart
-      setTimeout(() => {
-        refreshCart();
-      }, 500);
-    }
-  }, []);
-
   const loadOrder = async () => {
     try {
       const response = await getOrder(orderId);
@@ -40,6 +24,24 @@ export default function OrderSuccess() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (orderId) {
+      loadOrder();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId]);
+
+  // Refresh cart when component mounts to ensure it's cleared
+  useEffect(() => {
+    if (refreshCart) {
+      // Small delay to ensure backend has cleared the cart
+      setTimeout(() => {
+        refreshCart();
+      }, 500);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return <div className="loading"><div className="spinner"></div></div>;
@@ -69,7 +71,7 @@ export default function OrderSuccess() {
           <h1 className={styles.title}>Thank You for Your Trust! 🙏</h1>
           
           <div className={styles.ideaStageMessage}>
-            <h2 className={styles.ideaStageTitle}>🚀 We're in Idea Stage!</h2>
+            <h2 className={styles.ideaStageTitle}>🚀 We&apos;re in Idea Stage!</h2>
             <p className={styles.message}>
               We want to be completely transparent with you. RAVYA is currently in the 
               <strong> idea and validation stage</strong>. We are gathering feedback from early 
@@ -128,7 +130,7 @@ export default function OrderSuccess() {
           <div className={styles.note}>
             <p>📧 Order confirmation has been sent to your email</p>
             <p>💰 Your full refund will be processed within 5-7 business days</p>
-            <p>📬 We'll keep you updated on our journey and send special launch offers!</p>
+            <p>📬 We&apos;ll keep you updated on our journey and send special launch offers!</p>
           </div>
         </div>
       </div>
