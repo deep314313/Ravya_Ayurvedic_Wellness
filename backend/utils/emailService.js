@@ -2,14 +2,21 @@ const nodemailer = require('nodemailer');
 
 // Create transporter
 const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER || 'ravya.health@gmail.com',
-      pass: process.env.EMAIL_PASSWORD // App password from Gmail
-    }
-  });
-};
+    return nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER || 'ravya.health@gmail.com',
+        pass: process.env.EMAIL_PASSWORD
+      },
+      tls: {
+        rejectUnauthorized: false
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000
+    });
+  };
 
 // Send thank you email to customer (Idea Stage)
 const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) => {
