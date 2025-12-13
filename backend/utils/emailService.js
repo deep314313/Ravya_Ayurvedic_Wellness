@@ -1,20 +1,24 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter
+// Create transporter with enhanced timeout and fallback settings
 const createTransporter = () => {
     return nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      port: 465, // Using port 465 with SSL (more reliable than 587 on some hosts)
+      secure: true, // true for port 465, false for 587
       auth: {
         user: process.env.EMAIL_USER || 'ravya.health@gmail.com',
         pass: process.env.EMAIL_PASSWORD
       },
       tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        minVersion: 'TLSv1.2'
       },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000
+      connectionTimeout: 20000, // Increased to 20 seconds
+      greetingTimeout: 20000,
+      socketTimeout: 20000,
+      debug: true, // Enable debug logs
+      logger: true // Enable logging
     });
   };
 

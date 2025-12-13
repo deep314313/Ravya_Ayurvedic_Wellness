@@ -5,8 +5,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {/* Favicon */}
-        <link rel="icon" href="/Ravya_Logo_Transparent.png" />
-        <link rel="apple-touch-icon" href="/Ravya_Logo_Transparent.png" />
+        <link rel="icon" href="/Ravya_Logo.png" />
+        <link rel="apple-touch-icon" href="/Ravya_Logo.png" />
         
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
