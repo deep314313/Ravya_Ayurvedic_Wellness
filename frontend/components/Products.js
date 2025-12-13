@@ -93,6 +93,7 @@ const Products = ({ products = [] }) => {
                 <div className={styles.bottleContainer3D}>
                   {/* Real Transparent Bottle Image */}
                   <div className={styles.bottleImageWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       src={getProductImage(product.name)}
                       alt={product.name}
@@ -164,7 +165,7 @@ const Products = ({ products = [] }) => {
         <div className={styles.cta}>
           <div className={styles.ctaContent}>
             <h3 className={styles.ctaTitle}>Not sure which one to choose?</h3>
-            <p className={styles.ctaSubtitle}>Click "Know More" on any product to see complete details</p>
+            <p className={styles.ctaSubtitle}>Click &quot;Know More&quot; on any product to see complete details</p>
             <button className="btn btn-accent" style={{ marginTop: '1rem' }}>
               🎁 Buy Bundle & Save 20%
             </button>

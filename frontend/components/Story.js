@@ -7,6 +7,7 @@ const Story = () => {
         <div className={styles.storyContent}>
           <div className={styles.storyLeft}>
             <div className={styles.imageWrapper}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/ancient_image.png" 
                 alt="Ancient Ayurvedic Wellness - RAVYA" 
@@ -24,7 +25,7 @@ const Story = () => {
             </h2>
 
             <p className={styles.storyText}>
-              We've taken time-honored Ayurvedic recipes passed down through generations 
+              We&apos;ve taken time-honored Ayurvedic recipes passed down through generations 
               and transformed them into convenient, delicious wellness drinks. No more 
               brewing, mixing, or measuring – just open, sip, and feel the difference.
             </p>

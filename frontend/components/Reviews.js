@@ -97,7 +97,7 @@ const Reviews = ({ reviews = [] }) => {
             </div>
 
             <p className={styles.comment}>
-              "{displayReviews[currentIndex].comment}"
+              &quot;{displayReviews[currentIndex].comment}&quot;
             </p>
 
             <div className={styles.reviewer}>
