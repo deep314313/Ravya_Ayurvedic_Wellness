@@ -716,6 +716,13 @@
 
   .productCard {
     padding: 1.5rem;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .productCard:hover {
+    transform: translateY(-8px) !important;
   }
 
   .productBottle {
@@ -745,6 +752,11 @@
 }
 
 @media (max-width: 480px) {
+  .productCard {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  
   .productBottle {
     height: 240px;
   }
