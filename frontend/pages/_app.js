@@ -7,6 +7,7 @@ function MyApp({ Component, pageProps }) {
     <AuthProvider>
       <CartProvider>
         <Component {...pageProps} />
+        <Analytics />
       </CartProvider>
     </AuthProvider>
   )
