@@ -1,24 +1,30 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter with enhanced timeout and fallback settings
+// Create transporter with optimized settings for cloud hosting
 const createTransporter = () => {
     return nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 465, // Using port 465 with SSL (more reliable than 587 on some hosts)
-      secure: true, // true for port 465, false for 587
+      port: 587, // Port 587 with STARTTLS (better for cloud providers)
+      secure: false, // false for 587, true for 465
+      requireTLS: true, // Force TLS
       auth: {
         user: process.env.EMAIL_USER || 'ravya.health@gmail.com',
         pass: process.env.EMAIL_PASSWORD
       },
       tls: {
         rejectUnauthorized: false,
-        minVersion: 'TLSv1.2'
+        ciphers: 'SSLv3'
       },
-      connectionTimeout: 20000, // Increased to 20 seconds
-      greetingTimeout: 20000,
-      socketTimeout: 20000,
-      debug: true, // Enable debug logs
-      logger: true // Enable logging
+      connectionTimeout: 30000, // 30 seconds
+      greetingTimeout: 30000,
+      socketTimeout: 30000,
+      pool: true, // Use connection pooling
+      maxConnections: 1,
+      maxMessages: 3,
+      rateDelta: 1000,
+      rateLimit: 5,
+      debug: true,
+      logger: true
     });
   };
 
@@ -26,6 +32,10 @@ const createTransporter = () => {
 const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) => {
   try {
     const transporter = createTransporter();
+    
+    // Verify connection first
+    await transporter.verify();
+    console.log('✅ SMTP connection verified');
     
     const mailOptions = {
       from: {
@@ -127,7 +137,10 @@ const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) 
     console.log('Order confirmation email sent to:', customerEmail);
     return { success: true };
   } catch (error) {
-    console.error('Error sending order confirmation email:', error);
+    console.error('❌ Error sending order confirmation email:', error.message);
+    console.error('Full error:', JSON.stringify(error, null, 2));
+    console.error('Error code:', error.code);
+    console.error('Error command:', error.command);
     return { success: false, error: error.message };
   }
 };

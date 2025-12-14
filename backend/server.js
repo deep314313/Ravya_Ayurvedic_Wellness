@@ -34,6 +34,58 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'RAVYA API is running' });
 });
 
+// Test email endpoint (for debugging) - GET for easy browser testing
+app.get('/api/test-email', async (req, res) => {
+  try {
+    const { sendOrderConfirmationEmail } = require('./utils/emailService');
+    const testEmail = req.query.email || 'ravya.health@gmail.com';
+    
+    console.log('🧪 Testing email to:', testEmail);
+    const result = await sendOrderConfirmationEmail(testEmail, 'Test User', 'TEST123');
+    
+    if (result.success) {
+      res.json({ 
+        success: true, 
+        message: 'Test email sent successfully!',
+        sentTo: testEmail
+      });
+    } else {
+      res.status(500).json({ 
+        success: false, 
+        error: result.error,
+        message: 'Email sending failed. Check server logs for details.'
+      });
+    }
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
+});
+
+// POST endpoint also available
+app.post('/api/test-email', async (req, res) => {
+  try {
+    const { sendOrderConfirmationEmail } = require('./utils/emailService');
+    const testEmail = req.body.email || 'ravya.health@gmail.com';
+    
+    console.log('🧪 Testing email to:', testEmail);
+    const result = await sendOrderConfirmationEmail(testEmail, 'Test User', 'TEST123');
+    
+    if (result.success) {
+      res.json({ success: true, message: 'Test email sent successfully!', sentTo: testEmail });
+    } else {
+      res.status(500).json({ success: false, error: result.error });
+    }
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
