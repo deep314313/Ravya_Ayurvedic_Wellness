@@ -35,20 +35,22 @@ router.post('/create-order', async (req, res) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
     
-    // Delivery charge
-    const deliveryCharge = 40;
-    const finalTotal = cart.total + deliveryCharge;
+    // No delivery charge - free delivery!
+    const finalTotal = cart.total;
     
     // Create order in database
     const order = await Order.create({
       customerInfo: {
-        name: user.name,
-        phone: user.phone,
-        email: shippingAddress.email || user.email || '',  // Email from checkout form
+        name: shippingAddress.name || user.name,
+        phone: shippingAddress.phone || user.phone,
+        email: user.email || '',  // Optional email
         address: {
-          ...shippingAddress,
-          name: shippingAddress.name,
-          phone: shippingAddress.phone
+          street: shippingAddress.address || '',  // Complete address in street field
+          city: '',  // Not required
+          state: '',  // Not required
+          pincode: '',  // Not required
+          name: shippingAddress.name || user.name,
+          phone: shippingAddress.phone || user.phone
         }
       },
       items: cart.items.map(item => ({

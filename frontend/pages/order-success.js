@@ -114,11 +114,11 @@ export default function OrderSuccess() {
 
           <div className={styles.shippingInfo}>
             <h3>Shipping Address:</h3>
-            <p>{order.customerInfo.name}</p>
-            <p>{order.customerInfo.phone}</p>
-            <p>{order.customerInfo.address.street}</p>
-            <p>{order.customerInfo.address.city}, {order.customerInfo.address.state}</p>
-            <p>{order.customerInfo.address.pincode}</p>
+            <p><strong>{order.customerInfo.name}</strong></p>
+            <p><strong>{order.customerInfo.phone}</strong></p>
+            <p style={{ whiteSpace: 'pre-line', marginTop: '0.5rem' }}>
+              {order.customerInfo.address.street}
+            </p>
           </div>
 
           <div className={styles.actions}>

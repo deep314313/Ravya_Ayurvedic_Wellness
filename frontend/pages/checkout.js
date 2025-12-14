@@ -14,14 +14,19 @@ export default function Checkout() {
   const [shippingAddress, setShippingAddress] = useState({
     name: '',
     phone: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    pincode: ''
+    address: ''
   });
   
-  const deliveryCharge = 40; // Minimal delivery charge
+  // Pre-fill user details when component mounts
+  useEffect(() => {
+    if (user) {
+      setShippingAddress(prev => ({
+        ...prev,
+        name: user.name || '',
+        phone: user.phone || ''
+      }));
+    }
+  }, [user]);
   
   const [couponCode, setCouponCode] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
@@ -98,27 +103,27 @@ export default function Checkout() {
   };
 
   const handlePayment = async () => {
-    // Validate all required fields
-    if (!shippingAddress.name || !shippingAddress.phone || !shippingAddress.email || !shippingAddress.street || !shippingAddress.city || !shippingAddress.state || !shippingAddress.pincode) {
-      alert('Please fill in all delivery details including email');
+    // Validate only name, phone, and address
+    if (!shippingAddress.name || !shippingAddress.phone || !shippingAddress.address) {
+      alert('Please fill in all required fields: Name, Phone, and Address');
       return;
     }
     
-    // Validate phone
+    // Validate name (minimum 2 characters)
+    if (shippingAddress.name.trim().length < 2) {
+      alert('Please enter a valid name');
+      return;
+    }
+    
+    // Validate phone (10 digits, starts with 6-9)
     if (!/^[6-9]\d{9}$/.test(shippingAddress.phone)) {
       alert('Please enter a valid 10-digit phone number');
       return;
     }
     
-    // Validate email
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shippingAddress.email)) {
-      alert('Please enter a valid email address');
-      return;
-    }
-    
-    // Validate pincode
-    if (!/^\d{6}$/.test(shippingAddress.pincode)) {
-      alert('Please enter a valid 6-digit pincode');
+    // Simple address check - just ensure it's not empty
+    if (shippingAddress.address.trim().length < 5) {
+      alert('Please enter your delivery address');
       return;
     }
 
@@ -242,6 +247,9 @@ export default function Checkout() {
               {/* Shipping Address */}
               <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>Delivery Details</h2>
+                <p className={styles.sectionNote}>
+                  📦 Simple & Fast Checkout - Just 3 fields!
+                </p>
                 <div className={styles.form}>
                   <div className={styles.formGroup}>
                     <label>Full Name *</label>
@@ -249,9 +257,10 @@ export default function Checkout() {
                       type="text"
                       value={shippingAddress.name}
                       onChange={(e) => setShippingAddress({ ...shippingAddress, name: e.target.value })}
-                      placeholder="Enter recipient name"
+                      placeholder="Enter your full name"
                       required
                     />
+                    <small>You can edit if needed</small>
                   </div>
 
                   <div className={styles.formGroup}>
@@ -265,65 +274,20 @@ export default function Checkout() {
                       maxLength="10"
                       required
                     />
+                    <small>You can edit if needed</small>
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label>Email Address *</label>
-                    <input
-                      type="email"
-                      value={shippingAddress.email}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
-                      placeholder="your.email@example.com"
+                    <label>Complete Delivery Address *</label>
+                    <textarea
+                      value={shippingAddress.address}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
+                      placeholder="Enter your complete delivery address (e.g., House No, Street, Area, City, State, Pincode)"
+                      rows="4"
                       required
+                      className={styles.textarea}
                     />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Street Address *</label>
-                    <input
-                      type="text"
-                      value={shippingAddress.street}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, street: e.target.value })}
-                      placeholder="House number, street name"
-                      required
-                    />
-                  </div>
-
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label>City *</label>
-                      <input
-                        type="text"
-                        value={shippingAddress.city}
-                        onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
-                        placeholder="City"
-                        required
-                      />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>State *</label>
-                      <input
-                        type="text"
-                        value={shippingAddress.state}
-                        onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
-                        placeholder="State"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label>Pincode *</label>
-                    <input
-                      type="text"
-                      value={shippingAddress.pincode}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, pincode: e.target.value })}
-                      placeholder="6-digit pincode"
-                      pattern="[0-9]{6}"
-                      maxLength="6"
-                      required
-                    />
+                    <small>Write your full address as you would on a package</small>
                   </div>
                   
                   <p className={styles.requiredNote}>
@@ -421,12 +385,12 @@ export default function Checkout() {
 
                   <div className={styles.totalRow}>
                     <span>Delivery Charge</span>
-                    <span>₹{deliveryCharge}</span>
+                    <span className={styles.freeDelivery}>FREE ✅</span>
                   </div>
 
                   <div className={`${styles.totalRow} ${styles.grandTotal}`}>
                     <span>Total</span>
-                    <span>₹{cart.total + deliveryCharge}</span>
+                    <span>₹{cart.total}</span>
                   </div>
                 </div>
 
@@ -436,7 +400,7 @@ export default function Checkout() {
                   disabled={processing}
                   style={{ width: '100%' }}
                 >
-                  {processing ? 'Processing...' : `Pay ₹${cart.total + deliveryCharge}`}
+                  {processing ? 'Processing...' : `Place Order - ₹${cart.total}`}
                 </button>
 
                 <div className={styles.paymentNote}>

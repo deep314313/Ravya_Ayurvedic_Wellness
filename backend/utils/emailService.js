@@ -186,9 +186,7 @@ const sendOrderNotificationToAdmin = async (orderDetails) => {
       
       <div class="section">
         <h3>Delivery Address</h3>
-        <p>${orderDetails.customerInfo.address.street}</p>
-        <p>${orderDetails.customerInfo.address.city}, ${orderDetails.customerInfo.address.state}</p>
-        <p>PIN: ${orderDetails.customerInfo.address.pincode}</p>
+        <p style="white-space: pre-line;">${orderDetails.customerInfo.address.street || 'Address not provided'}</p>
       </div>
       
       <div class="section">
@@ -360,9 +358,7 @@ const sendPaymentFailureNotificationToAdmin = async (orderDetails, errorReason) 
       
       <div class="section">
         <h3>Delivery Address</h3>
-        <p>${orderDetails.customerInfo.address.street}</p>
-        <p>${orderDetails.customerInfo.address.city}, ${orderDetails.customerInfo.address.state}</p>
-        <p>PIN: ${orderDetails.customerInfo.address.pincode}</p>
+        <p style="white-space: pre-line;">${orderDetails.customerInfo.address.street || 'Address not provided'}</p>
       </div>
       
       <div class="section">
