@@ -1,50 +1,22 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// Create transporter with optimized settings for cloud hosting
-const createTransporter = () => {
-    return nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587, // Port 587 with STARTTLS (better for cloud providers)
-      secure: false, // false for 587, true for 465
-      requireTLS: true, // Force TLS
-      auth: {
-        user: process.env.EMAIL_USER || 'ravya.health@gmail.com',
-        pass: process.env.EMAIL_PASSWORD
-      },
-      tls: {
-        rejectUnauthorized: false,
-        ciphers: 'SSLv3'
-      },
-      connectionTimeout: 30000, // 30 seconds
-      greetingTimeout: 30000,
-      socketTimeout: 30000,
-      pool: true, // Use connection pooling
-      maxConnections: 1,
-      maxMessages: 3,
-      rateDelta: 1000,
-      rateLimit: 5,
-      debug: true,
-      logger: true
-    });
-  };
+// Initialize Resend
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+
+if (!resend) {
+  console.warn('⚠️ RESEND_API_KEY not found in environment variables');
+}
 
 // Send thank you email to customer (Idea Stage)
 const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) => {
   try {
-    const transporter = createTransporter();
-    
-    // Verify connection first
-    await transporter.verify();
-    console.log('✅ SMTP connection verified');
-    
-    const mailOptions = {
-      from: {
-        name: 'RAVYA - Ayurvedic Wellness',
-        address: process.env.EMAIL_USER || 'ravya.health@gmail.com'
-      },
-      to: customerEmail,
-      subject: '🙏 Thank You for Your Trust - RAVYA (Idea Stage)',
-      html: `
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,17 +102,23 @@ const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) 
   </div>
 </body>
 </html>
-      `
-    };
-    
-    await transporter.sendMail(mailOptions);
-    console.log('Order confirmation email sent to:', customerEmail);
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA - Ayurvedic Wellness <onboarding@resend.dev>',
+      to: customerEmail,
+      subject: '🙏 Thank You for Your Trust - RAVYA (Idea Stage)',
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    console.log('✅ Order confirmation email sent to:', customerEmail);
     return { success: true };
   } catch (error) {
     console.error('❌ Error sending order confirmation email:', error.message);
-    console.error('Full error:', JSON.stringify(error, null, 2));
-    console.error('Error code:', error.code);
-    console.error('Error command:', error.command);
     return { success: false, error: error.message };
   }
 };
@@ -148,20 +126,15 @@ const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) 
 // Send order notification to admin
 const sendOrderNotificationToAdmin = async (orderDetails) => {
   try {
-    const transporter = createTransporter();
-    
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
     const itemsList = orderDetails.items.map(item => 
       `<li>${item.product.name} x ${item.quantity} - ₹${item.price * item.quantity}</li>`
     ).join('');
     
-    const mailOptions = {
-      from: {
-        name: 'RAVYA System',
-        address: process.env.EMAIL_USER || 'ravya.health@gmail.com'
-      },
-      to: 'ravya.health@gmail.com',
-      subject: `🎉 New Order Received - #${orderDetails._id}`,
-      html: `
+    const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -220,14 +193,23 @@ const sendOrderNotificationToAdmin = async (orderDetails) => {
   </div>
 </body>
 </html>
-      `
-    };
-    
-    await transporter.sendMail(mailOptions);
-    console.log('Order notification sent to admin');
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA System <onboarding@resend.dev>',
+      to: 'ravya.health@gmail.com',
+      subject: `🎉 New Order Received - #${orderDetails._id}`,
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    console.log('✅ Order notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('Error sending admin notification:', error);
+    console.error('❌ Error sending admin notification:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -235,16 +217,11 @@ const sendOrderNotificationToAdmin = async (orderDetails) => {
 // Send contact form notification to admin
 const sendContactNotificationToAdmin = async (contactData) => {
   try {
-    const transporter = createTransporter();
-    
-    const mailOptions = {
-      from: {
-        name: 'RAVYA Contact Form',
-        address: process.env.EMAIL_USER || 'ravya.health@gmail.com'
-      },
-      to: 'ravya.health@gmail.com',
-      subject: `📩 New Contact Form Submission - ${contactData.subject}`,
-      html: `
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -305,14 +282,23 @@ const sendContactNotificationToAdmin = async (contactData) => {
   </div>
 </body>
 </html>
-      `
-    };
-    
-    await transporter.sendMail(mailOptions);
-    console.log('Contact form notification sent to admin');
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA Contact Form <onboarding@resend.dev>',
+      to: 'ravya.health@gmail.com',
+      subject: `📩 New Contact Form Submission - ${contactData.subject}`,
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    console.log('✅ Contact form notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('Error sending contact notification:', error);
+    console.error('❌ Error sending contact notification:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -320,16 +306,11 @@ const sendContactNotificationToAdmin = async (contactData) => {
 // Send failed payment notification to admin
 const sendPaymentFailureNotificationToAdmin = async (orderDetails, errorReason) => {
   try {
-    const transporter = createTransporter();
-    
-    const mailOptions = {
-      from: {
-        name: 'RAVYA System',
-        address: process.env.EMAIL_USER || 'ravya.health@gmail.com'
-      },
-      to: 'ravya.health@gmail.com',
-      subject: `⚠️ Payment Failed - Order #${orderDetails._id}`,
-      html: `
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -389,14 +370,23 @@ const sendPaymentFailureNotificationToAdmin = async (orderDetails, errorReason) 
   </div>
 </body>
 </html>
-      `
-    };
-    
-    await transporter.sendMail(mailOptions);
-    console.log('Payment failure notification sent to admin');
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA System <onboarding@resend.dev>',
+      to: 'ravya.health@gmail.com',
+      subject: `⚠️ Payment Failed - Order #${orderDetails._id}`,
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    console.log('✅ Payment failure notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('Error sending payment failure notification:', error);
+    console.error('❌ Error sending payment failure notification:', error.message);
     return { success: false, error: error.message };
   }
 };
