@@ -200,6 +200,59 @@ section {
   opacity: 0.1;
 }
 
+/* Floating social icons (bottom-right) */
+.floating-social {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 9999;
+}
+
+.floating-social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  opacity: 0.95;
+}
+
+.floating-social-icon.instagram {
+  background: radial-gradient(circle at 30% 30%, #f9ce34, #ee2a7b 50%, #6228d7);
+}
+
+.floating-social-icon.whatsapp {
+  background-color: #25d366;
+}
+
+.floating-social-icon:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .floating-social {
+    right: 0.9rem;
+    bottom: 1.1rem;
+  }
+
+  .floating-social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 0.75rem;
+  }
+}
+
 /* Animations */
 @keyframes float {
   0%, 100% {

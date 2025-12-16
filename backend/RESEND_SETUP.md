@@ -225,3 +225,4 @@ Check Resend dashboard regularly to track email usage and delivery rates.
 
 **Resend is faster, simpler, and more reliable than Gmail SMTP!** 🚀
 
+
