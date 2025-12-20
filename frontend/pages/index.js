@@ -46,6 +46,10 @@ export default function Home() {
     fetchData();
   }, []);
 
+  // Get base URL for absolute image paths (for SEO meta tags)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ravyahealth.in';
+  const logoUrl = `${siteUrl}/Ravya_Logo.png`;
+
   return (
     <>
       <Head>
@@ -53,10 +57,55 @@ export default function Home() {
         <meta name="description" content="Ancient Ayurveda in modern ready-to-drink format. Shop immunity, sugar balance, and heart health drinks made with real herbs." />
         <meta name="keywords" content="ayurvedic drinks, wellness beverages, immunity drinks, functional beverages, ready to drink, India" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="RAVYA - Ayurvedic Wellness Drinks" />
-        <meta property="og:description" content="Sip Daily Ayurveda, Straight From the Bottle" />
+        
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:title" content="RAVYA - Ayurvedic Wellness Drinks" />
+        <meta property="og:description" content="Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format." />
+        <meta property="og:image" content={logoUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="RAVYA Logo - Ayurvedic Wellness Drinks" />
+        <meta property="og:site_name" content="RAVYA" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={siteUrl} />
+        <meta name="twitter:title" content="RAVYA - Ayurvedic Wellness Drinks" />
+        <meta name="twitter:description" content="Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format." />
+        <meta name="twitter:image" content={logoUrl} />
+        <meta name="twitter:image:alt" content="RAVYA Logo - Ayurvedic Wellness Drinks" />
+        
+        {/* Additional SEO */}
+        <meta name="author" content="RAVYA" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={siteUrl} />
+        <link rel="icon" href="/Ravya_Logo.png" />
+        
+        {/* Structured Data (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "RAVYA",
+              "url": siteUrl,
+              "logo": logoUrl,
+              "description": "Ancient Ayurveda in modern ready-to-drink format. Shop immunity, sugar balance, and heart health drinks made with real herbs.",
+              "sameAs": [
+                "https://instagram.com/ravya.health",
+                "https://wa.me/919868314313"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "email": "ravya.health@gmail.com"
+              }
+            })
+          }}
+        />
       </Head>
 
       <Navbar />
