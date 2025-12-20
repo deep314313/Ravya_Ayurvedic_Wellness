@@ -23,7 +23,7 @@ const Hero = ({ products }) => {
             </div>
             
             <h1 className={styles.heroTitle}>
-              Sip Daily Ayurveda,
+              Ravya: Sip Daily Ayurveda,
               <br />
               <span className="text-gradient">Straight From the Bottle</span>
             </h1>

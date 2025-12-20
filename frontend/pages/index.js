@@ -53,47 +53,61 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>RAVYA - Ayurvedic Wellness Drinks | Ready-to-Drink Functional Beverages</title>
-        <meta name="description" content="Ancient Ayurveda in modern ready-to-drink format. Shop immunity, sugar balance, and heart health drinks made with real herbs." />
-        <meta name="keywords" content="ayurvedic drinks, wellness beverages, immunity drinks, functional beverages, ready to drink, India" />
+        {/* Primary SEO - "Ravya" keyword focused */}
+        <title>Ravya | Ayurvedic Wellness Drinks | Ready-to-Drink Functional Beverages</title>
+        <meta name="description" content="Ravya - Ancient Ayurveda in modern ready-to-drink format. Shop Ravya immunity, sugar balance, and heart health drinks made with real herbs. Ravya wellness beverages." />
+        <meta name="keywords" content="ravya, ravya health, ravya drinks, ravya ayurvedic, ravya wellness, ayurvedic drinks, wellness beverages, immunity drinks, functional beverages, ready to drink, India" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Brand Name Meta */}
+        <meta name="application-name" content="Ravya" />
+        <meta name="apple-mobile-web-app-title" content="Ravya" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteUrl} />
-        <meta property="og:title" content="RAVYA - Ayurvedic Wellness Drinks" />
-        <meta property="og:description" content="Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format." />
+        <meta property="og:title" content="Ravya - Ayurvedic Wellness Drinks" />
+        <meta property="og:description" content="Ravya - Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format by Ravya." />
         <meta property="og:image" content={logoUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="RAVYA Logo - Ayurvedic Wellness Drinks" />
-        <meta property="og:site_name" content="RAVYA" />
+        <meta property="og:image:alt" content="Ravya Logo - Ayurvedic Wellness Drinks" />
+        <meta property="og:site_name" content="Ravya" />
+        <meta property="og:locale" content="en_IN" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={siteUrl} />
-        <meta name="twitter:title" content="RAVYA - Ayurvedic Wellness Drinks" />
-        <meta name="twitter:description" content="Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format." />
+        <meta name="twitter:title" content="Ravya - Ayurvedic Wellness Drinks" />
+        <meta name="twitter:description" content="Ravya - Sip Daily Ayurveda, Straight From the Bottle. Ancient Ayurveda in modern ready-to-drink format." />
         <meta name="twitter:image" content={logoUrl} />
-        <meta name="twitter:image:alt" content="RAVYA Logo - Ayurvedic Wellness Drinks" />
+        <meta name="twitter:image:alt" content="Ravya Logo - Ayurvedic Wellness Drinks" />
         
         {/* Additional SEO */}
-        <meta name="author" content="RAVYA" />
-        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Ravya" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
         <link rel="canonical" href={siteUrl} />
         <link rel="icon" href="/Ravya_Logo.png" />
+        <meta name="theme-color" content="#4A7C59" />
         
-        {/* Structured Data (JSON-LD) */}
+        {/* Structured Data (JSON-LD) - Enhanced for "Ravya" */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "RAVYA",
+              "name": "Ravya",
+              "alternateName": "Ravya Health",
               "url": siteUrl,
               "logo": logoUrl,
-              "description": "Ancient Ayurveda in modern ready-to-drink format. Shop immunity, sugar balance, and heart health drinks made with real herbs.",
+              "image": logoUrl,
+              "description": "Ravya - Ancient Ayurveda in modern ready-to-drink format. Shop Ravya immunity, sugar balance, and heart health drinks made with real herbs.",
+              "brand": {
+                "@type": "Brand",
+                "name": "Ravya"
+              },
               "sameAs": [
                 "https://instagram.com/ravya.health",
                 "https://wa.me/919868314313"
@@ -101,7 +115,31 @@ export default function Home() {
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "Customer Service",
-                "email": "ravya.health@gmail.com"
+                "email": "ravya.health@gmail.com",
+                "availableLanguage": ["English", "Hindi"]
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "IN"
+              }
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Ravya",
+              "url": siteUrl,
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": `${siteUrl}/?q={search_term_string}`
+                },
+                "query-input": "required name=search_term_string"
               }
             })
           }}
