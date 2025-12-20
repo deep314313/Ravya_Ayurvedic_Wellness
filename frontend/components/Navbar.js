@@ -61,9 +61,6 @@ const Navbar = () => {
           <button onClick={() => scrollToSection('how-it-works')} className={styles.navLink}>
             How it works
           </button>
-          <button onClick={() => scrollToSection('ayurvedic-science')} className={styles.navLink}>
-            Ayurvedic Science
-          </button>
           <button onClick={() => scrollToSection('reviews')} className={styles.navLink}>
             Reviews
           </button>
@@ -73,6 +70,9 @@ const Navbar = () => {
           <button onClick={() => scrollToSection('contact')} className={styles.navLink}>
             Contact
           </button>
+          <a href="/careers" className={styles.navLink}>
+            Careers
+          </a>
           
           {isAuthenticated ? (
             <>

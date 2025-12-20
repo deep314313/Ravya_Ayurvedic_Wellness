@@ -6,7 +6,7 @@ const resend = process.env.RESEND_API_KEY
   : null;
 
 if (!resend) {
-  console.warn('⚠️ RESEND_API_KEY not found in environment variables');
+  // RESEND_API_KEY not configured
 }
 
 // Send thank you email to customer (Idea Stage)
@@ -105,7 +105,7 @@ const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) 
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'RAVYA - Ayurvedic Wellness <onboarding@resend.dev>',
+      from: 'RAVYA - Ayurvedic Wellness <hello@ravyahealth.in>',
       to: customerEmail,
       subject: '🙏 Thank You for Your Trust - RAVYA (Idea Stage)',
       html: htmlContent
@@ -115,10 +115,8 @@ const sendOrderConfirmationEmail = async (customerEmail, customerName, orderId) 
       throw new Error(error.message);
     }
 
-    console.log('✅ Order confirmation email sent to:', customerEmail);
     return { success: true };
   } catch (error) {
-    console.error('❌ Error sending order confirmation email:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -196,7 +194,7 @@ const sendOrderNotificationToAdmin = async (orderDetails) => {
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'RAVYA System <onboarding@resend.dev>',
+      from: 'RAVYA System <noreply@ravyahealth.in>',
       to: 'ravya.health@gmail.com',
       subject: `🎉 New Order Received - #${orderDetails._id}`,
       html: htmlContent
@@ -206,10 +204,8 @@ const sendOrderNotificationToAdmin = async (orderDetails) => {
       throw new Error(error.message);
     }
 
-    console.log('✅ Order notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('❌ Error sending admin notification:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -285,7 +281,7 @@ const sendContactNotificationToAdmin = async (contactData) => {
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'RAVYA Contact Form <onboarding@resend.dev>',
+      from: 'RAVYA Contact Form <hello@ravyahealth.in>',
       to: 'ravya.health@gmail.com',
       subject: `📩 New Contact Form Submission - ${contactData.subject}`,
       html: htmlContent
@@ -295,10 +291,8 @@ const sendContactNotificationToAdmin = async (contactData) => {
       throw new Error(error.message);
     }
 
-    console.log('✅ Contact form notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('❌ Error sending contact notification:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -373,7 +367,7 @@ const sendPaymentFailureNotificationToAdmin = async (orderDetails, errorReason) 
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'RAVYA System <onboarding@resend.dev>',
+      from: 'RAVYA System <noreply@ravyahealth.in>',
       to: 'ravya.health@gmail.com',
       subject: `⚠️ Payment Failed - Order #${orderDetails._id}`,
       html: htmlContent
@@ -383,10 +377,215 @@ const sendPaymentFailureNotificationToAdmin = async (orderDetails, errorReason) 
       throw new Error(error.message);
     }
 
-    console.log('✅ Payment failure notification sent to admin');
     return { success: true };
   } catch (error) {
-    console.error('❌ Error sending payment failure notification:', error.message);
+    return { success: false, error: error.message };
+  }
+};
+
+// Send career application notification to admin
+const sendCareerApplicationNotificationToAdmin = async (applicationData) => {
+  try {
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f9fa; }
+    .header { background: linear-gradient(135deg, #F4B942 0%, #F9D67A 100%); color: #1a1a1a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+    .content { background: white; padding: 30px; border: 1px solid #e0e0e0; }
+    .section { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; }
+    .label { font-weight: bold; color: #666; display: block; margin-bottom: 5px; }
+    .value { color: #1a1a1a; }
+    .message-box { background: white; padding: 15px; border-left: 4px solid #F4B942; margin-top: 10px; }
+    .resume-info { background: #e8f5e9; padding: 10px; border-radius: 5px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2 style="margin: 0;">New Career Application</h2>
+      <p style="margin: 5px 0 0 0; font-size: 14px;">${applicationData.position}</p>
+    </div>
+    
+    <div class="content">
+      <div class="section">
+        <span class="label">Applicant Name:</span>
+        <span class="value">${applicationData.name}</span>
+      </div>
+      
+      <div class="section">
+        <span class="label">Email:</span>
+        <span class="value">${applicationData.email}</span>
+      </div>
+      
+      <div class="section">
+        <span class="label">Phone:</span>
+        <span class="value">${applicationData.phone}</span>
+      </div>
+      
+      <div class="section">
+        <span class="label">Position Applied:</span>
+        <span class="value"><strong>${applicationData.position}</strong></span>
+      </div>
+      
+      ${applicationData.resume ? `
+      <div class="section">
+        <span class="label">Resume:</span>
+        <div class="resume-info">
+          <p style="margin: 0;"><strong>File:</strong> ${applicationData.resume.fileName}</p>
+          <p style="margin: 5px 0 0 0;"><strong>Type:</strong> ${applicationData.resume.fileType}</p>
+          ${applicationData.resume.url ? `
+          <p style="margin: 10px 0 0 0;">
+            <a href="${applicationData.resume.url}" style="color: #F4B942; text-decoration: none; font-weight: 600;" target="_blank">
+              Download Resume from Cloudinary
+            </a>
+          </p>
+          ` : ''}
+          <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">Resume uploaded to Cloudinary. Access via admin panel or direct link above.</p>
+        </div>
+      </div>
+      ` : '<div class="section"><span class="label">Resume:</span> <span class="value" style="color: #999;">Not provided</span></div>'}
+      
+      ${applicationData.coverLetter ? `
+      <div class="section">
+        <span class="label">Cover Letter / Message:</span>
+        <div class="message-box">
+          ${applicationData.coverLetter}
+        </div>
+      </div>
+      ` : ''}
+      
+      <div class="section">
+        <span class="label">Applied At:</span>
+        <span class="value">${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</span>
+      </div>
+      
+      <p style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 5px;">
+        <strong>Action Required:</strong> Please review this application and respond to the candidate at the earliest.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA Careers <careers@ravyahealth.in>',
+      to: 'ravya.health@gmail.com',
+      subject: `New Career Application - ${applicationData.name} (${applicationData.position})`,
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+// Send thank you email to applicant after career application
+const sendCareerApplicationConfirmationToApplicant = async (applicantEmail, applicantName, position) => {
+  try {
+    if (!resend) {
+      throw new Error('RESEND_API_KEY not configured');
+    }
+
+    // Validate email
+    if (!applicantEmail || !applicantEmail.includes('@')) {
+      throw new Error('Invalid email address');
+    }
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #F4B942 0%, #F9D67A 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+    .logo { font-size: 42px; font-weight: 900; color: #1a1a1a; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: 'Arial Black', sans-serif; }
+    .tagline { color: #666; font-size: 14px; font-weight: 500; }
+    .content { background: #ffffff; padding: 30px; border: 1px solid #e0e0e0; }
+    .message { font-size: 16px; margin-bottom: 20px; }
+    .highlight { background: #fff5e1; padding: 20px; border-left: 4px solid #F4B942; margin: 20px 0; border-radius: 5px; }
+    .footer { background: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #666; border-radius: 0 0 10px 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">RAVYA</div>
+      <div class="tagline">Ayurvedic Wellness Drinks</div>
+    </div>
+    
+    <div class="content">
+      <h2 style="color: #1a1a1a;">Dear ${applicantName},</h2>
+      
+      <p class="message">
+        <strong>Thank you for your interest in joining RAVYA!</strong>
+      </p>
+      
+      <p class="message">
+        We have successfully received your application for the position of <strong>${position}</strong>.
+      </p>
+      
+      <div class="highlight">
+        <h3 style="margin-top: 0; color: #F4B942;">What&apos;s Next?</h3>
+        <p style="margin-bottom: 0;">
+          Our team will review your application carefully. We will get back to you soon with an update on the next steps.
+        </p>
+      </div>
+      
+      <p class="message">
+        We appreciate the time you took to apply and look forward to learning more about you.
+      </p>
+      
+      <p class="message">
+        If you have any questions in the meantime, feel free to reach out to us at <a href="mailto:ravya.health@gmail.com" style="color: #F4B942;">ravya.health@gmail.com</a>.
+      </p>
+      
+      <p style="margin-top: 30px;">
+        Best regards,<br>
+        <strong>Team RAVYA</strong><br>
+        <em>Ancient Ayurveda, Modern Convenience</em>
+      </p>
+    </div>
+    
+    <div class="footer">
+      <p><strong>RAVYA - Ayurvedic Wellness Drinks</strong></p>
+      <p>New Delhi, India</p>
+      <p>Email: ravya.health@gmail.com | Phone: +91 98683 14313</p>
+      <p style="margin-top: 15px; color: #999;">
+        © 2026 RAVYA. All rights reserved.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    const { data, error } = await resend.emails.send({
+      from: 'RAVYA Careers <careers@ravyahealth.in>',
+      to: applicantEmail,
+      subject: 'Thank You for Your Application - RAVYA',
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message || 'Unknown error from Resend API');
+    }
+
+    return { success: true, data };
+  } catch (error) {
     return { success: false, error: error.message };
   }
 };
@@ -395,6 +594,8 @@ module.exports = {
   sendOrderConfirmationEmail,
   sendOrderNotificationToAdmin,
   sendContactNotificationToAdmin,
-  sendPaymentFailureNotificationToAdmin
+  sendPaymentFailureNotificationToAdmin,
+  sendCareerApplicationNotificationToAdmin,
+  sendCareerApplicationConfirmationToApplicant
 };
 

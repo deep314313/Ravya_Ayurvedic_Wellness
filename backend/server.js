@@ -15,8 +15,8 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true
 }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // Routes
 app.use('/api/products', require('./routes/products'));
@@ -28,6 +28,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/coupons', require('./routes/coupons'));
 app.use('/api/payment', require('./routes/payment'));
+app.use('/api/careers', require('./routes/careers'));
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -72,7 +73,6 @@ app.post('/api/test-email', async (req, res) => {
     const { sendOrderConfirmationEmail } = require('./utils/emailService');
     const testEmail = req.body.email || 'ravya.health@gmail.com';
     
-    console.log('🧪 Testing email to:', testEmail);
     const result = await sendOrderConfirmationEmail(testEmail, 'Test User', 'TEST123');
     
     if (result.success) {
@@ -81,14 +81,12 @@ app.post('/api/test-email', async (req, res) => {
       res.status(500).json({ success: false, error: result.error });
     }
   } catch (error) {
-    console.error('Test email error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
   res.status(500).json({ success: false, message: 'Something went wrong!' });
 });
 
@@ -98,24 +96,33 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   
   // Keep-alive mechanism for Render free tier
-  if (process.env.NODE_ENV === 'production') {
+  // Works in both production and if BACKEND_URL is set (for Render)
+  const SELF_URL = process.env.BACKEND_URL;
+  const isProduction = process.env.NODE_ENV === 'production' || SELF_URL;
+  
+  if (isProduction && SELF_URL) {
     const https = require('https');
-    const SELF_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+    const http = require('http');
     
-    console.log('🔄 Keep-alive service enabled');
+    // Ping self every 5 minutes to prevent sleep (Render sleeps after 15 min)
+    const pingInterval = 5 * 60 * 1000; // 5 minutes
     
-    // Ping self every 10 minutes to prevent sleep
-    setInterval(() => {
+    const pingServer = () => {
       const url = `${SELF_URL}/api/health`;
-      console.log(`[${new Date().toISOString()}] Self-ping: ${url}`);
+      const protocol = SELF_URL.startsWith('https') ? https : http;
       
-      const protocol = SELF_URL.startsWith('https') ? https : require('http');
       protocol.get(url, (res) => {
-        console.log(`✅ Self-ping successful: ${res.statusCode}`);
-      }).on('error', (err) => {
-        console.error('❌ Self-ping error:', err.message);
+        // Success - server is awake
+      }).on('error', () => {
+        // Silent fail - don't log errors
       });
-    }, 10 * 60 * 1000); // Every 10 minutes
+    };
+    
+    // Initial ping after 1 minute
+    setTimeout(pingServer, 60 * 1000);
+    
+    // Then ping every 5 minutes
+    setInterval(pingServer, pingInterval);
   }
 });
 

@@ -138,4 +138,16 @@ export const paymentFailed = async (orderId, error) => {
   return response.data;
 };
 
+// Careers
+export const submitCareerApplication = async (formData) => {
+  // Use FormData for file uploads (multipart/form-data)
+  // Don't set Content-Type header - browser will set it automatically with boundary
+  const response = await axios.post(`${API_URL}/careers/apply`, formData, {
+    headers: {
+      // Let browser set Content-Type with boundary for multipart/form-data
+    }
+  });
+  return response.data;
+};
+
 export default api;
