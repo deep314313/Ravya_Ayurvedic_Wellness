@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import LoginModal from './LoginModal';
@@ -70,9 +71,9 @@ const Navbar = () => {
           <button onClick={() => scrollToSection('contact')} className={styles.navLink}>
             Contact
           </button>
-          <a href="/careers" className={styles.navLink}>
+          <Link href="/careers" className={styles.navLink}>
             Careers
-          </a>
+          </Link>
           
           {isAuthenticated ? (
             <>

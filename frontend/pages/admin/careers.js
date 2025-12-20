@@ -251,7 +251,7 @@ export default function AdminCareers() {
           <div className={styles.infoBox}>
             <h3>ℹ️ How to Access Resumes:</h3>
             <ol>
-              <li>Click the <strong>"Download"</strong> button next to each application</li>
+              <li>Click the <strong>&quot;Download&quot;</strong> button next to each application</li>
               <li>The resume will download as a PDF or Word document</li>
               <li>All files are stored in MongoDB as base64 encoded data</li>
               <li>You can also access via API: <code>GET {API_URL}/careers/applications/:id/resume</code></li>
